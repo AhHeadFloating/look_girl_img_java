@@ -1,24 +1,10 @@
 package com.miaoyunhan.look_girl_img.crawler;
 
+import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.rocks.BreadthCrawler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.miaoyunhan.look_girl_img.LookGirlImgApplication;
-import com.miaoyunhan.look_girl_img.entity.ImgEntity;
-import com.miaoyunhan.look_girl_img.service.ImgService;
-import com.miaoyunhan.look_girl_img.utils.SpringUtil;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.FormElement;
-import org.jsoup.select.Elements;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +58,14 @@ public class ListCrawler extends BreadthCrawler {
 
             for (int i = 2; i < integer/5; i++) {
                 String nextUrl = url+i+".html";
-                next.add(nextUrl);
+                CrawlDatum imgPage = next.addAndReturn(nextUrl).key(nextUrl).type("imgPage");
+                this.addSeed(imgPage);
+                imgList.add(nextUrl);
             }
         }else if(page.matchUrl("https://www.meituri.com/*/.\\d.html")){
-
+            System.out.println(url);
         }
-        Elements select = page.select(".tupian_img");
+        /*Elements select = page.select(".tupian_img");
         for (int i=0;true;i++){
             ImgEntity imgEntity = new ImgEntity();
             try{
@@ -88,10 +76,20 @@ public class ListCrawler extends BreadthCrawler {
             }
             ImgService imgService = SpringUtil.getBean(ImgService.class);
             imgService.save(imgEntity);
-        }
+        }*/
 
         System.out.println("URL:\n" + url);
-        imgList.add(url);
+    }
+
+    public static void start() throws Exception {
+        ListCrawler crawler = new ListCrawler("crawl", true);
+        crawler.start(2);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+
+        DemoManualNewsCrawler crawler2 = new DemoManualNewsCrawler("crawl2", true,imgList);
+        crawler2.start(1);
+
     }
 
 }

@@ -16,9 +16,10 @@ public class LookGirlImgApplicationTests {
     }
     @Test
     public void init() throws Exception {
-        ListCrawler crawler = new ListCrawler("crawl", true);
-        /*start crawl with depth of 4*/
+        /*ListCrawler crawler = new ListCrawler("crawl", true);
+        *//*start crawl with depth of 4*//*
         crawler.start(2);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();*/
+        ListCrawler.start();
     }
 }
