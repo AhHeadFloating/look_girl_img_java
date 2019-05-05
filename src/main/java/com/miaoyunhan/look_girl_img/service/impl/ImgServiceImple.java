@@ -4,6 +4,7 @@ import com.miaoyunhan.look_girl_img.dao.ImgDao;
 import com.miaoyunhan.look_girl_img.entity.ImgEntity;
 import com.miaoyunhan.look_girl_img.service.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,6 @@ public class ImgServiceImple implements ImgService {
 
     @Override
     public List<ImgEntity> findByGroup(String group) {
-        return imgDao.findByImgGroup(group);
+        return imgDao.findByImgGroupSort(group);
     }
 }

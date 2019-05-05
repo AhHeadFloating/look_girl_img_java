@@ -56,6 +56,7 @@ public class ListCrawler extends BreadthCrawler {
                 System.out.println(url);
             }
 
+            imgList.add(url);
             for (int i = 2; i < integer/5; i++) {
                 String nextUrl = url+i+".html";
                 CrawlDatum imgPage = next.addAndReturn(nextUrl).key(nextUrl).type("imgPage");
